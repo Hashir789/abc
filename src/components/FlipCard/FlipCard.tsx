@@ -1,10 +1,10 @@
 import './FlipCard.css';
-import React, { useState, ReactNode } from 'react';
+import { FC, useState, ReactNode, MouseEvent } from 'react';
 
-const FlipCard: React.FC<{ children: ReactNode; width?: string | number }> = ({ children, width = '400px' }) => {
+const FlipCard: FC<{ children: ReactNode; width?: string, maxWidth?: string }> = ({ children, width = '100vw', maxWidth = '400px' }) => {
   const [flipped, setFlipped] = useState(false);
 
-  const handleFlip = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleFlip = (event: MouseEvent<HTMLDivElement>) => {
     const clickedElement = event.target as HTMLElement;
     
     if (clickedElement.getAttribute("data-flip-action") === "true") {
@@ -13,7 +13,7 @@ const FlipCard: React.FC<{ children: ReactNode; width?: string | number }> = ({ 
   };
 
   return (
-    <div className="flip-card" style={{ width }}>
+    <div className="flip-card" style={{ width, maxWidth }}>
       <div className={`flip-card-content ${flipped ? 'flipped' : ''}`}  onClick={handleFlip}>
         {children}
       </div>
@@ -21,11 +21,11 @@ const FlipCard: React.FC<{ children: ReactNode; width?: string | number }> = ({ 
   );
 };
 
-const FlipCardFrontSide: React.FC<{ children: ReactNode }> = ({ children }) => {
+const FlipCardFrontSide: FC<{ children: ReactNode }> = ({ children }) => {
   return <div className="flip-card-front">{children}</div>;
 };
 
-const FlipCardBackSide: React.FC<{ children: ReactNode }> = ({ children }) => {
+const FlipCardBackSide: FC<{ children: ReactNode }> = ({ children }) => {
   return <div className="flip-card-back">{children}</div>;
 };
 
