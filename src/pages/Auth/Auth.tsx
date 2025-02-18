@@ -9,27 +9,8 @@ const Auth: FC = () => {
       <FlipCardFrontSide>
         <h1 className="logo">Kitaab</h1>
         <form action="#" method="post" className="form">
-          {/* <div className="input-field">
-            <label className="label" htmlFor="email">Email</label>
-            <input className="input" type="text" name="email" placeholder="john.doe@example.com" autoComplete="off" />
-            <div className="left-icon">
-              <i className=" fa-lg fa-solid fa-envelope" style={{ color: "#ffffff99" }}></i>
-            </div>
-          </div>
-          <p className="helper-text">This is a helper text</p> */}
-          <InputField type='email'/>
+          <InputField type='email' leftIcon='fa-envelope' placeholder='john.doe@example.com'/>
           <InputField type='password'/>
-          {/* <div className="input-field">
-            <label className="label" htmlFor="password">Password</label>
-            <input className="input" type="password" name="password" placeholder="••••••••" autoComplete="off" />
-            <div className="left-icon">
-              <i className=" fa-lg fa-solid fa-lock" style={{ color: "#ffffff99" }}></i>
-            </div>
-            <div className="right-icon">
-              <i className=" fa-lg fa-solid fa-eye-slash" style={{ color: "#ffffff99" }}></i>
-            </div>
-          </div>
-          <p className="helper-text">This is a helper text</p> */}
           <div className="input-field-checkbox">
             <input type="checkbox" id="rememberMe" name="rememberMe" />
             <label htmlFor="rememberMe">Keep me logged in</label>
@@ -44,25 +25,8 @@ const Auth: FC = () => {
       <FlipCardBackSide>
         <h1 className="logo">Kitaab</h1>
         <form action="#" method="post" className="form">
-          <div className="input-field">
-            <label className="label" htmlFor="email">Email</label>
-            <input className="input" type="text" name="email" placeholder="john.doe@example.com" autoComplete="off" />
-            <div className="left-icon">
-              <i className=" fa-lg fa-solid fa-envelope" style={{ color: "#ffffff99" }}></i>
-            </div>
-          </div>
-          <p className="helper-text">This is a helper text</p>
-          <div className="input-field">
-            <label className="label" htmlFor="password">Password</label>
-            <input className="input" type="password" name="password" placeholder="••••••••" autoComplete="off" />
-            <div className="left-icon">
-              <i className=" fa-lg fa-solid fa-lock" style={{ color: "#ffffff99" }}></i>
-            </div>
-            <div className="right-icon">
-              <i className=" fa-lg fa-solid fa-eye-slash" style={{ color: "#ffffff99" }}></i>
-            </div>
-          </div>
-          <p className="helper-text">This is a helper text</p>
+          <InputField type='email' leftIcon='fa-envelope' placeholder='john.doe@example.com'/>
+          <InputField type='password'/>
           <div className="input-field-checkbox">
             <input type="checkbox" id="rememberMe2" name="rememberMe2" />
             <label htmlFor="rememberMe2">Keep me logged in</label>
