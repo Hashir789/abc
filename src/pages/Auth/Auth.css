@@ -10,65 +10,6 @@
     flex-direction: column;
     justify-content: center;
 }
-.input-field {
-    padding-top: 5px;
-    position: relative;
-    margin-left: 15px;
-    margin-right: 15px;
-}
-.label {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 14px;
-}
-.left-icon {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 40px;
-    margin-left: 10px;
-    display: grid;
-    place-items: center;
-}
-.right-icon {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    height: 40px;
-    padding-left: 40px;
-    padding-right: 10px;
-    display: grid;
-    place-items: center;
-}
-input[type="text"], input[type="password"] {
-    font-size: 18px;
-    width: 100%;
-    margin-top: 5px;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.2);
-    border: none;
-    height: 40px;
-    color: rgba(255, 255, 255, 0.6);
-    padding-right: 10px;
-    padding-left: 40px;
-}
-input[type="password"] {
-    padding-left: 40px;
-    padding-right: 40px;
-}
-input[type="text"]:hover, input[type="password"]:hover {
-    outline: 2px solid rgba(255, 255, 255, 0.1);
-}
-input[type="text"]:focus, input[type="password"]:focus {
-    outline: 2px solid rgba(255, 255, 255, 0.3);
-}
-input[type="text"]::placeholder, input[type="password"]::placeholder {
-    color: rgba(255, 255, 255, 0.2);
-}
-.helper-text{
-    font-size: 14px;
-    margin-top: 5px;
-    opacity: 0%;
-}
 .input-field-checkbox {
     display: flex;
     align-items: center;
@@ -83,6 +24,7 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
     padding-left: 30px;
     font-size: 14px;
     color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
 }
 .input-field-checkbox label::before {
     content: '';
@@ -95,10 +37,12 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
     background-color: rgba(255, 255, 255, 0.6);
     border: 2px solid rgba(0, 0, 0, 0.6);
     transition: background-color 0.2s, border-color 0.2s;
+    cursor: pointer;
 }
 .input-field-checkbox input:checked + label::before {
     background-color: rgba(0, 0, 0, 0.6);
     border-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 .input-field-checkbox input:checked + label::after {
     content: '\2714';
@@ -107,6 +51,7 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
     top: 0;
     font-size: 16px;
     color: white;
+    cursor: pointer;
 }
 hr {
     width: 80%;
@@ -147,10 +92,19 @@ hr {
     cursor: pointer;
     color: rgba(255, 255, 255, 1);
 }
-.link:hover {
-    cursor: pointer;
-    color: rgba(255, 255, 255, 1);
-}
 .change-side {
     font-size: 14px;
+}
+.signup-window-1 {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow-y: hidden;
+}
+.signup-window-2 {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    top: 0%;
+    left: 0%;
 }
