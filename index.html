@@ -17,6 +17,8 @@
         padding: 0;
         box-sizing: border-box;
         font-family: "Poppins", serif;
+        /* scrollbar-width: thin; */
+        /* scrollbar-color: #4a90e2 #f0f0f0; */
     }
     body {
         background-image: url('./background.jpg');
@@ -45,6 +47,20 @@
         width: 100%;
         background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.5) 85%, rgba(0, 0, 0, 0.8) 100%);
         z-index: -1;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      border: 2px solid rgba(0, 0, 0, 0.4);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
   </style>
   <body>

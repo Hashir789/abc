@@ -1,27 +1,29 @@
 import './InputField.css';
-import { FC, useState } from 'react';
+import { FC, useState, useId } from 'react';
 
 interface InputFieldProps {
-  type: 'text' | 'password' | 'email';
+  title: string;
   leftIcon?: string;
   rightIcon?: string;
   placeholder?: string;
+  isPassword?: boolean;
+  isScrollbar?: boolean;
 }
 
-const InputField: FC<InputFieldProps> = ({ type, leftIcon, rightIcon, placeholder }) => {
+const InputField: FC<InputFieldProps> = ({ title, leftIcon, rightIcon, placeholder, isPassword, isScrollbar }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const isPassword = type === 'password';
+  const id = useId();
   return (
     <>
-      <div className="input-field">
-        <label className="label" htmlFor={type}>
-          {type === 'password' ? "Password" : "Email"}
+      <div className="input-field" style={{ marginRight: isScrollbar ? '7px': '15px' }}>
+        <label className="label" htmlFor={id}>
+          {title}
         </label>
         <input
           className="input"
           type={isPassword && !showPassword ? 'password' : 'text'}
-          name={type}
-          placeholder={type === 'password' ? "••••••••" : placeholder ? placeholder : ''}
+          name={id}
+          placeholder={isPassword ? "••••••••" : placeholder ? placeholder : ''}
           autoComplete="off"
           style={{ paddingRight: (isPassword || rightIcon) ? '40px' : '10px' }}
         />

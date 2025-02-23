@@ -28,6 +28,7 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
     text-align: left;
+    will-change: transform, backdrop-filter;
 }
 .flip-card-back {
     transform: rotateY(180deg);
