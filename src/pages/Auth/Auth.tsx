@@ -1,7 +1,6 @@
 import './Auth.css';
 import { FC, useEffect } from 'react';
 import Button from '../../components/Button/Button';
-import Checkbox from '../../components/Input/Checkbox/Checkbox';
 import InputField from '../../components/Input/InputField/InputField';
 import { FlipCard, FlipCardBackSide, FlipCardFrontSide } from "../../components/FlipCard/FlipCard";
 
@@ -16,7 +15,6 @@ const Auth: FC = () => {
         <form className="form">
           <InputField title='Email' placeholder='john.doe@example.com' leftIcon='fa-envelope'/>
           <InputField title='Password' isPassword/>
-          <Checkbox text='Keep me logged in'/>
           <Button>Login</Button>
         </form>
         <hr/>
@@ -33,7 +31,6 @@ const Auth: FC = () => {
             <InputField title='Password' isPassword isScrollbar/>
             <InputField title='Confirm Password' isPassword isScrollbar/>
           </div>
-          <Checkbox text='Keep me logged in'/>
           <Button>Signup</Button>
         </form>
         <hr/>
