@@ -50,10 +50,16 @@ input[type="text"]:focus, input[type="password"]:focus {
 input[type="text"]::placeholder, input[type="password"]::placeholder {
     color: rgba(255, 255, 255, 0.2);
 }
-.helper-text{
+.helper-text {
     font-size: 14px;
-    margin-top: 5px;
+    margin-top: 10px;
     margin-left: 15px;
-    opacity: 0%;
-    color: rgba(255, 255, 255, 0.6)
+    /* opacity: 0%; */
+    color: rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    /* border-left: 3px solid red;
+    padding-left: 5px;
+    border-radius: 5px; */
 }
