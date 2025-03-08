@@ -2,20 +2,19 @@ import './InputField.css';
 import { FC, useState } from 'react';
 
 interface InputFieldProps {
-  name?: string;
+  name: string;
   title: string;
   leftIcon?: string;
   rightIcon?: string;
   placeholder?: string;
   isPassword?: boolean;
   isScrollbar?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  value?: string;
-  error?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  error: string | undefined;
 }
 
-const InputField: FC<InputFieldProps> = ({ name, title, leftIcon, rightIcon, placeholder, isPassword, isScrollbar, onChange, onBlur, value, error }) => {
+const InputField: FC<InputFieldProps> = ({ name, title, leftIcon, rightIcon, placeholder, isPassword, isScrollbar, onChange, value, error }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
@@ -30,7 +29,6 @@ const InputField: FC<InputFieldProps> = ({ name, title, leftIcon, rightIcon, pla
           placeholder={isPassword ? "••••••••" : placeholder ? placeholder : ''}
           autoComplete="off"
           onChange={onChange}
-          onBlur={onBlur}
           value={value}
         />
         {(isPassword || leftIcon) && <div className="left-icon">

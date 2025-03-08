@@ -1,16 +1,16 @@
-import React, { MouseEvent, useState, ReactNode } from "react";
 import "./Button.css";
+import React, { MouseEvent, useState, ReactNode } from "react";
 
 interface RippleButtonProps {
   onClick?: () => void;
-  children: ReactNode; // Allow button text or elements
+  children: ReactNode;
+  disable: boolean;
 }
 
-const Button: React.FC<RippleButtonProps> = ({ onClick, children }) => {
+const Button: React.FC<RippleButtonProps> = ({ onClick, children, disable }) => {
   const [ripples, setRipples] = useState<{ x: number; y: number; id: number }[]>([]);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -27,7 +27,7 @@ const Button: React.FC<RippleButtonProps> = ({ onClick, children }) => {
   };
 
   return (
-    <button type="submit" className="ripple-button" onClick={handleClick}>
+    <button type="submit" className="ripple-button" onClick={handleClick} disabled={disable}>
       {children}
       {ripples.map((ripple) => (
         <span
