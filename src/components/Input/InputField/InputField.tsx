@@ -1,45 +1,50 @@
 import './InputField.css';
-import { FC, useState, useId } from 'react';
+import { FC, useState } from 'react';
 
 interface InputFieldProps {
+  name?: string;
   title: string;
   leftIcon?: string;
   rightIcon?: string;
   placeholder?: string;
   isPassword?: boolean;
   isScrollbar?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  value?: string;
+  error?: string;
 }
 
-const InputField: FC<InputFieldProps> = ({ title, leftIcon, rightIcon, placeholder, isPassword, isScrollbar }) => {
+const InputField: FC<InputFieldProps> = ({ name, title, leftIcon, rightIcon, placeholder, isPassword, isScrollbar, onChange, onBlur, value, error }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const id = useId();
   return (
     <>
-      <div className="input-field" style={{ marginRight: isScrollbar ? '7px': '15px' }}>
-        <label className="label" htmlFor={id}>
+      <div className={`input ${isScrollbar ? 'scrollable': ''}`}>
+        <label className="label" htmlFor={name}>
           {title}
         </label>
         <input
-          className="input"
+          className={(isPassword || rightIcon) ? 'padding-lg': 'padding-sm'}
           type={isPassword && !showPassword ? 'password' : 'text'}
-          name={id}
+          name={name}
           placeholder={isPassword ? "••••••••" : placeholder ? placeholder : ''}
           autoComplete="off"
-          style={{ paddingRight: (isPassword || rightIcon) ? '40px' : '10px' }}
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
         />
         {(isPassword || leftIcon) && <div className="left-icon">
-          <i className={`fa-lg fa-solid ${ isPassword ? "fa-lock" : leftIcon }`} style={{ color: "#ffffff99" }}></i>
+          <i className={`fa-lg fa-solid ${ isPassword ? "fa-lock" : leftIcon } icon-color`}></i>
         </div>}
         {(isPassword || rightIcon) && (
           <div className="right-icon" onClick={() => setShowPassword(!showPassword)}>
             <i
-              className={`fa-lg fa-solid ${ isPassword ? showPassword ? 'fa-eye-slash' : 'fa-eye' : rightIcon }`}
-              style={{ color: "#ffffff99", cursor: "pointer" }}
+              className={`fa-lg fa-solid ${ isPassword ? showPassword ? 'fa-eye-slash' : 'fa-eye' : rightIcon } icon-color pointer`}
             ></i>
           </div>
         )}
       </div>
-      <p className="helper-text">This is a helper text</p>
+      <p className={`helper-text ${error ? 'visible': ''}`}>{error ?? '.'}</p>
     </>
   );
 };
