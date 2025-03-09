@@ -19,7 +19,7 @@ const validationSchema1 = Yup.object({
 });
 
 const validationSchema2 = Yup.object({
-  username: Yup.string().min(3, "Must be at least 3 characters").required("Username is required"),
+  username: Yup.string().required("Username is required").min(3, "Must be at least 3 characters"),
   email: Yup.string().email("Invalid email format").required("Email is required"),
   password: Yup.string()
     .required("Password is required")
@@ -36,7 +36,7 @@ const validationSchema2 = Yup.object({
 const Auth: FC = () => {
 
   useEffect(() => {
-    document.getElementsByClassName("display-window")[0].scrollTop = 150;
+    document.getElementsByClassName("display-window")[0].scrollTop = 200;
   }, []);
 
   const form1 = useFormik({
@@ -100,7 +100,11 @@ const Auth: FC = () => {
         <hr />
         <p className="change-side">
           Don't have an account?
-          <button className="link" data-flip-action>
+          <button className="link" data-flip-action onClick={()=>{
+            setTimeout(()=>{
+              document.getElementsByClassName("display-window")[0].scrollTop = 0; 
+            }, 600)
+          }}>
             &nbsp;Signup
           </button>
         </p>
@@ -153,7 +157,11 @@ const Auth: FC = () => {
         <hr />
         <p className="change-side">
           Already have an account?
-          <button className="link" data-flip-action>
+          <button className="link" data-flip-action onClick={()=>{
+            setTimeout(()=>{
+              document.getElementsByClassName("display-window")[0].scrollTop = 200; 
+            }, 600)
+          }}>
             &nbsp;Login
           </button>
         </p>
