@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { debounce } from "lodash";
 import { useFormik } from "formik";
 import Button from "../../components/Button/Button";
-import React, { FC, useEffect, useCallback } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import InputField from "../../components/Input/InputField/InputField";
 import { FlipCard, FlipCardBackSide, FlipCardFrontSide } from "../../components/FlipCard/FlipCard";
 import Separator from "../../components/Separator/Separator";
@@ -35,6 +35,8 @@ const validationSchema2 = Yup.object({
 });
 
 const Auth: FC = () => {
+
+  const [changeSection, setChangeSection] = useState(true);
 
   useEffect(() => {
     document.getElementsByClassName("display-window")[0].scrollTop = 200;
@@ -77,37 +79,48 @@ const Auth: FC = () => {
   return (
     <FlipCard width="90vw" maxWidth="350px">
       <FlipCardFrontSide>
-        <h1 className="logo">Kitaab</h1>
-        <form className="form" onSubmit={form1.handleSubmit}>
-          <InputField
-            name="email"
-            title="Email"
-            placeholder="john.doe@example.com"
-            leftIcon="fa-envelope"
-            onChange={handleChangeWithDebounce(form1)}
-            value={form1.values.email}
-            error={form1.touched.email ? form1.errors.email : undefined}
-          />
-          <InputField
-            name="password"
-            title="Password"
-            isPassword
-            hideError
-            onChange={handleChangeWithDebounce(form1)}
-            value={form1.values.password}
-            error={form1.touched.password ? form1.errors.password : undefined}
-          />
-          <p className="forgot-password">Forgot Password ?</p>
-          <Button>Login</Button>
-        </form>
-        <Separator/>
-        <p className="change-side">
-          Don't have an account ?
-          <button className="link" data-flip-action>
-            Signup
-          </button>
-        </p>
+        <div className="flip-container">
+          <div className={`flip-content ${changeSection ? '': 'change-flip-section'}`}>
+            <div className="flip-section">
+              <h1 className="logo">Kitaab</h1>
+              <form className="form" onSubmit={form1.handleSubmit}>
+                <InputField
+                  name="email"
+                  title="Email"
+                  displayHidden
+                  placeholder="john.doe@example.com"
+                  leftIcon="fa-envelope"
+                  onChange={handleChangeWithDebounce(form1)}
+                  value={form1.values.email}
+                  error={form1.touched.email ? form1.errors.email : undefined}
+                />
+                <InputField
+                  name="password"
+                  title="Password"
+                  isPassword
+                  displayNone
+                  onChange={handleChangeWithDebounce(form1)}
+                  value={form1.values.password}
+                  error={form1.touched.password ? form1.errors.password : undefined}
+                />
+                <button className="forgot-password" onClick={()=> setChangeSection(false)}>Forgot Password ?</button>
+                <Button>Login</Button>
+              </form>
+              <Separator />
+              <p className="change-side">
+                Don't have an account?
+                <button className="link" data-flip-action>
+                  Signup
+                </button>
+              </p>
+            </div>
+            <div className="flip-section">
+              <h1 className="logo" onClick={()=> setChangeSection(true)}>Kitaab</h1>
+            </div>
+          </div>
+        </div>
       </FlipCardFrontSide>
+
       <FlipCardBackSide>
         <h1 className="logo">Kitaab</h1>
         <form className="form" onSubmit={form2.handleSubmit}>
