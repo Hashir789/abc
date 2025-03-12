@@ -68,9 +68,10 @@
 .change-side {
     font-size: 14px;
 }
-.display-window {
-    height: 200px;
-    width: 100%;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+.next {
+    transition: margin 0.5s ease;
+    margin-left: 5px;
+}
+.animate-next {
+    margin-left: 20px;
 }
