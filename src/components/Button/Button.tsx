@@ -4,10 +4,11 @@ import React, { MouseEvent, useState, ReactNode } from "react";
 interface RippleButtonProps {
   onClick?: () => void;
   children: ReactNode;
-  disable: boolean;
+  fontSize?: string;
+  background?: string;
 }
 
-const Button: React.FC<RippleButtonProps> = ({ onClick, children, disable }) => {
+const Button: React.FC<RippleButtonProps> = ({ onClick, children }) => {
   const [ripples, setRipples] = useState<{ x: number; y: number; id: number }[]>([]);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -27,7 +28,11 @@ const Button: React.FC<RippleButtonProps> = ({ onClick, children, disable }) => 
   };
 
   return (
-    <button type="submit" className="ripple-button" onClick={handleClick} disabled={disable}>
+    <button
+      type="submit"
+      className="ripple-button"
+      onClick={handleClick}
+    >
       {children}
       {ripples.map((ripple) => (
         <span

@@ -16,6 +16,7 @@
 .label {
     color: rgba(255, 255, 255, 0.6);
     font-size: 14px;
+    margin-left: 5px;
 }
 .left-icon {
     position: absolute;
@@ -70,7 +71,7 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
 .helper-text {
     font-size: 14px;
     margin-top: 5px;
-    margin-left: 15px;
+    margin-left: 20px;
     opacity: 0%;
     color: rgba(255, 255, 255, 0.4);
     transition: opacity 0.5s ease;

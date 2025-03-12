@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import React, { FC, useEffect, useCallback } from "react";
 import InputField from "../../components/Input/InputField/InputField";
 import { FlipCard, FlipCardBackSide, FlipCardFrontSide } from "../../components/FlipCard/FlipCard";
+import Separator from "../../components/Separator/Separator";
 
 const validationSchema1 = Yup.object({
   email: Yup.string().email("Invalid email format").required("Email is required"),
@@ -91,21 +92,19 @@ const Auth: FC = () => {
             name="password"
             title="Password"
             isPassword
+            hideError
             onChange={handleChangeWithDebounce(form1)}
             value={form1.values.password}
             error={form1.touched.password ? form1.errors.password : undefined}
           />
-          <Button disable={!form1.isValid || Object.values(form1.values).some((val) => val === "")}>Login</Button>
+          <p className="forgot-password">Forgot Password ?</p>
+          <Button>Login</Button>
         </form>
-        <hr />
+        <Separator/>
         <p className="change-side">
-          Don't have an account?
-          <button className="link" data-flip-action onClick={()=>{
-            setTimeout(()=>{
-              document.getElementsByClassName("display-window")[0].scrollTop = 0; 
-            }, 600)
-          }}>
-            &nbsp;Signup
+          Don't have an account ?
+          <button className="link" data-flip-action>
+            Signup
           </button>
         </p>
       </FlipCardFrontSide>
@@ -152,17 +151,13 @@ const Auth: FC = () => {
               error={form2.touched.confirmPassword ? form2.errors.confirmPassword : undefined}
             />
           </div>
-          <Button disable={!form2.isValid || Object.values(form2.values).some((val) => val === "")}>Signup</Button>
+          <Button>Signup</Button>
         </form>
-        <hr />
+        <Separator/>
         <p className="change-side">
-          Already have an account?
-          <button className="link" data-flip-action onClick={()=>{
-            setTimeout(()=>{
-              document.getElementsByClassName("display-window")[0].scrollTop = 200; 
-            }, 600)
-          }}>
-            &nbsp;Login
+          Already have an account ?
+          <button className="link" data-flip-action>
+            Login
           </button>
         </p>
       </FlipCardBackSide>

@@ -1,5 +1,6 @@
 .logo {
     margin-top: 30px;
+    margin-bottom: 10px;
     font-family: "Oleo Script", serif;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
     color: rgba(255, 255, 255, 0.7);
@@ -10,16 +11,6 @@
     flex-direction: column;
     justify-content: center;
 }
-hr {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    height: 1px;
-    color: rgba(0, 0, 0, 0.6);
-    background-color: rgba(255, 255, 255, 0.2);
-    border: none;
-    margin-top: 10px;
-}
 .change-side{
     margin-top: 30px;
     margin-bottom: 30px;
@@ -27,16 +18,30 @@ hr {
     font-size: 18px;
     color: rgba(255, 255, 255, 0.6);
 }
+.forgot-password {
+    margin-top: 5px;
+    text-align: right;
+    padding-right: 20px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+}
+.forgot-password:hover {
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+}
 .link {
     cursor: pointer;
     font-size: 14px;
     background-color: inherit;
     border: none;
     color: rgba(255, 255, 255, 0.6);
+    padding: 5px;
+    border-radius: 5px;
 }
 .link:hover {
     cursor: pointer;
     color: rgba(255, 255, 255, 1);
+    background: rgba(0, 0, 0, 0.1);
 }
 .change-side {
     font-size: 14px;

@@ -12,9 +12,10 @@ interface InputFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
   error: string | undefined;
+  hideError?: boolean | false;
 }
 
-const InputField: FC<InputFieldProps> = ({ name, title, leftIcon, rightIcon, placeholder, isPassword, isScrollbar, onChange, value, error }) => {
+const InputField: FC<InputFieldProps> = ({ name, title, leftIcon, rightIcon, placeholder, isPassword, isScrollbar, onChange, value, error, hideError }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
@@ -42,7 +43,7 @@ const InputField: FC<InputFieldProps> = ({ name, title, leftIcon, rightIcon, pla
           </div>
         )}
       </div>
-      <p className={`helper-text ${error ? 'visible': ''}`}>{error ?? '.'}</p>
+      {hideError !== true && <p className={`helper-text ${error ? 'visible': ''}`}>{error ?? '.'}</p>}
     </>
   );
 };
