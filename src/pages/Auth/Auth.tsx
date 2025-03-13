@@ -2,8 +2,10 @@ import "./Auth.css";
 import * as Yup from "yup";
 import { debounce } from "lodash";
 import { useFormik } from "formik";
+import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/Button/Button";
-import React, { FC, useState, useCallback } from "react";
+import { toast, Bounce } from "react-toastify";
+import React, { FC, useState, useCallback, useRef } from "react";
 import InputField from "../../components/Input/InputField/InputField";
 import { FlipCard, FlipCardBackSide, FlipCardFrontSide } from "../../components/FlipCard/FlipCard";
 import Separator from "../../components/Separator/Separator";
@@ -63,6 +65,27 @@ const Auth: FC = () => {
     debouncedValidate(form, fieldName);
   };
 
+  const isToastActive = useRef(false);
+
+  const showToast = () => {
+    if (!isToastActive.current) {
+      isToastActive.current = true;
+      toast.error("Wrong username or password!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+        transition: Bounce,
+        onClose: () => {
+          isToastActive.current = false;
+        }
+      });
+    }
+  };
+
   return (
     <FlipCard width="90vw" maxWidth="350px">
       <FlipCardFrontSide>
@@ -91,7 +114,7 @@ const Auth: FC = () => {
                   error={form1.touched.password ? form1.errors.password : undefined}
                 />
                 <button className="forgot-password" onClick={()=> setChangeSection(false)}>Forgot Password ?</button>
-                <Button>Login</Button>
+                <Button onClick={showToast}>Login</Button>
               </form>
               <Separator />
               <p className="change-side">
