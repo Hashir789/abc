@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import { debounce } from "lodash";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik, FormikProps } from "formik";
 import Login from "../../components/Auth/Login/Login";
@@ -33,7 +34,10 @@ const validationSchema22 = Yup.object({
     .oneOf([Yup.ref("password")], "Not Same")
 });
 
+
 const Auth: FC = () => {
+
+  const navigate = useNavigate();
 
   const [next, setNext] = useState(false);
   const [changeSectionLogin, setChangeSectionLogin] = useState(false);
@@ -47,6 +51,7 @@ const Auth: FC = () => {
     onSubmit: (values) => {
       console.log("Login Submitted", values);
       toast.dismiss();
+      navigate("/placeholder");
     },
   });
 
@@ -70,6 +75,7 @@ const Auth: FC = () => {
     onSubmit: (values) => {
       console.log("Signup Submitted", values);
       toast.dismiss();
+      navigate("/placeholder");
     },
   });
 

@@ -1,17 +1,18 @@
 import { FC } from "react";
+import { useNavigate } from "react-router";
+import Button from "../../components/Button/Button";
 
 const Placeholder: FC = () => {
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/");
+  }
+
   return (
     <>
-        <p>Hashir</p>
-        <p>Hashir</p>
-        <p>Hashir</p>
-        <p>Hashir</p>
-        <p>Hashir</p>
-        <p>Hashir</p>
-        <p>Hashir</p>
-        <p>Hashir</p>
+      <Button onClick={handleClick}>Back</Button>
     </>
   );
 };
