@@ -3,12 +3,12 @@ import React, { MouseEvent, useState, ReactNode } from "react";
 
 interface RippleButtonProps {
   onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   children: ReactNode;
-  fontSize?: string;
-  background?: string;
 }
 
-const Button: React.FC<RippleButtonProps> = ({ onClick, children }) => {
+const Button: React.FC<RippleButtonProps> = ({ onClick, children, onMouseEnter, onMouseLeave }) => {
   const [ripples, setRipples] = useState<{ x: number; y: number; id: number }[]>([]);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -32,6 +32,8 @@ const Button: React.FC<RippleButtonProps> = ({ onClick, children }) => {
       type="submit"
       className="ripple-button"
       onClick={handleClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {children}
       {ripples.map((ripple) => (

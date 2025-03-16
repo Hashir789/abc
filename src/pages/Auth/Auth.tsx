@@ -1,35 +1,43 @@
-import "./Auth.css";
 import * as Yup from "yup";
 import { debounce } from "lodash";
-import { useFormik } from "formik";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Button from "../../components/Button/Button";
-import { toast, Bounce } from "react-toastify";
+import { useFormik, FormikProps } from "formik";
+import Login from "../../components/Auth/Login/Login";
+import Signup1 from "../../components/Auth/Signup/Signup1";
+import Signup2 from "../../components/Auth/Signup/Signup2";
 import React, { FC, useState, useCallback, useRef } from "react";
-import InputField from "../../components/Input/InputField/InputField";
-import { FlipCard, FlipCardBackSide, FlipCardFrontSide } from "../../components/FlipCard/FlipCard";
-import Separator from "../../components/Separator/Separator";
+import ForgetPassword from "../../components/Auth/ForgetPassword/ForgetPassword";
+import { FlipCard, FlipCardBackSide, FlipCardFrontSide, FlipCardSection } from "../../components/FlipCard/FlipCard";
 
 const validationSchema1 = Yup.object({
-  email: Yup.string().email("Invalid email format").required("Email is required"),
-  password: Yup.string()
-    .required("Password is required")
-    .min(8, "Must be 8+ characters")
-    .matches(/[a-z]/, "Include a lowercase letter")
-    .matches(/[A-Z]/, "Include an uppercase letter")
-    .matches(/[0-9]/, "Include a number")
-    .matches(/[^A-Za-z0-9]/, "Include a special character")
+  email: Yup.string().email("Invalid format").required("Required"),
+  password: Yup.string().required("Required")
 });
 
-const validationSchema2 = Yup.object({
-  fullname: Yup.string().required("Fullname is required").min(3, "Must be at least 3 characters"),
-  email: Yup.string().email("Invalid email format").required("Email is required")
+const validationSchema21 = Yup.object({
+  fullname: Yup.string().required("Required").min(3, "Must be at least 3 characters"),
+  email: Yup.string().email("Invalid format").required("Required")
+});
+
+const validationSchema22 = Yup.object({
+  password: Yup.string()
+    .required("Required")
+    .min(8, "Must be atleast 8 characters")
+    .matches(/[a-z]/, "Must include a lowercase letter")
+    .matches(/[A-Z]/, "Must include an uppercase letter")
+    .matches(/[0-9]/, "Must include a number")
+    .matches(/[^A-Za-z0-9]/, "Must include a special character"),
+  confirmPassword: Yup.string()
+    .required("Required")
+    .oneOf([Yup.ref("password")], "Not Same")
 });
 
 const Auth: FC = () => {
 
-  const [changeSection, setChangeSection] = useState(true);
   const [next, setNext] = useState(false);
+  const [changeSectionLogin, setChangeSectionLogin] = useState(false);
+  const [changeSectionSignup, setChangeSectionSignup] = useState(false);
 
   const form1 = useFormik({
     initialValues: { email: "", password: "" },
@@ -38,27 +46,41 @@ const Auth: FC = () => {
     validateOnChange: false,
     onSubmit: (values) => {
       console.log("Login Submitted", values);
+      toast.dismiss();
     },
   });
 
-  const form2 = useFormik({
+  const form21 = useFormik({
     initialValues: { fullname: "", email: "" },
-    validationSchema: validationSchema2,
+    validationSchema: validationSchema21,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: (values) => {
+      setChangeSectionSignup(true);
+      console.log("Signup Submitted", values);
+      toast.dismiss();
+    },
+  });
+
+  const form22 = useFormik({
+    initialValues: { password: "", confirmPassword: "" },
+    validationSchema: validationSchema22,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: (values) => {
       console.log("Signup Submitted", values);
+      toast.dismiss();
     },
   });
 
   const debouncedValidate = useCallback(
-    debounce((form: any, field: string) => {
+    debounce((form: FormikProps<any>, field: string) => {
       form.validateField(field);
     }, 500),
     []
   );
 
-  const handleChangeWithDebounce = (form: any) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeWithDebounce = (form: FormikProps<any>) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
     form.setTouched({ ...form.touched, [fieldName]: true });
     form.handleChange(e);
@@ -67,113 +89,59 @@ const Auth: FC = () => {
 
   const isToastActive = useRef(false);
 
-  const showToast = () => {
+  const showToast = async <T extends object>(form: FormikProps<T>) => {
     if (!isToastActive.current) {
-      isToastActive.current = true;
-      toast.error("Wrong username or password!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-        transition: Bounce,
-        onClose: () => {
-          isToastActive.current = false;
-        }
-      });
+      const errors = await form.validateForm();
+      if (Object.keys(errors).length > 0) {
+        isToastActive.current = true;
+        toast.error(`${capitalizeFirstLetter(Object.keys(errors)[0])}: ${Object.values(errors)[0]}!`, {
+          onClose: () => {
+            isToastActive.current = false;
+          },
+        });
+        return true;
+      }
     }
+    return false;
   };
-
+  
+  const capitalizeFirstLetter = (text: string) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+  
   return (
     <FlipCard width="90vw" maxWidth="350px">
-      <FlipCardFrontSide>
-        <div className="flip-container">
-          <div className={`flip-content ${changeSection ? '': 'change-flip-section'}`}>
-            <div className="flip-section">
-              <h1 className="logo">Kitaab</h1>
-              <form className="form" onSubmit={form1.handleSubmit}>
-                <InputField
-                  name="email"
-                  title="Email"
-                  displayHidden
-                  placeholder="john.doe@example.com"
-                  leftIcon="fa-envelope"
-                  onChange={handleChangeWithDebounce(form1)}
-                  value={form1.values.email}
-                  error={form1.touched.email ? form1.errors.email : undefined}
-                />
-                <InputField
-                  name="password"
-                  title="Password"
-                  isPassword
-                  displayNone
-                  onChange={handleChangeWithDebounce(form1)}
-                  value={form1.values.password}
-                  error={form1.touched.password ? form1.errors.password : undefined}
-                />
-                <button className="forgot-password" onClick={()=> setChangeSection(false)}>Forgot Password ?</button>
-                <Button onClick={showToast}>Login</Button>
-              </form>
-              <Separator />
-              <p className="change-side">
-                Don't have an account?
-                <button className="link" data-flip-action>
-                  Signup
-                </button>
-              </p>
-            </div>
-            <div className="flip-section">
-              <h1 className="logo" onClick={()=> setChangeSection(true)}>Kitaab</h1>
-            </div>
-          </div>
-        </div>
+      <FlipCardFrontSide changeSection={changeSectionLogin}>
+        <FlipCardSection>
+          <Login 
+            form={form1} 
+            handleChangeWithDebounce={handleChangeWithDebounce} 
+            setChangeSectionLogin={setChangeSectionLogin} 
+            showToast={() => showToast(form1)}
+          />
+        </FlipCardSection>
+        <FlipCardSection>
+          <ForgetPassword setChangeSectionLogin={setChangeSectionLogin}/>
+        </FlipCardSection>
       </FlipCardFrontSide>
-      <FlipCardBackSide>
-        <div className="flip-container">
-          <div className={`flip-content ${changeSection ? '': 'change-flip-section'}`}>
-            <div className="flip-section">
-              <h1 className="logo">Kitaab</h1>
-              <form className="form" onSubmit={form2.handleSubmit}>
-                <InputField
-                  name="fullname"
-                  title="Full Name"
-                  placeholder="John Doe"
-                  leftIcon="fa-user"
-                  onChange={handleChangeWithDebounce(form2)}
-                  value={form2.values.fullname}
-                  error={form2.touched.fullname ? form2.errors.fullname : undefined}
-                />
-                <InputField
-                  name="email"
-                  title="Email"
-                  placeholder="john.doe@example.com"
-                  leftIcon="fa-envelope"
-                  onChange={handleChangeWithDebounce(form2)}
-                  value={form2.values.email}
-                  error={form2.touched.email ? form2.errors.email : undefined}
-                />
-                <Button>
-                  <div onMouseEnter={()=> setNext(true)} onMouseLeave={()=> setNext(false)} onClick={()=> setChangeSection(false)}>
-                    Next
-                    <i className={`fa-solid fa-angles-right fa-xs next ${next ? 'animate-next': ''}`}></i>
-                  </div>
-                </Button>
-              </form>
-              <Separator/>
-              <p className="change-side">
-                Already have an account ?
-                <button className="link" data-flip-action>
-                  Login
-                </button>
-              </p>
-            </div>
-            <div className="flip-section">
-              <h1 className="logo" onClick={()=> setChangeSection(true)}>Kitaab</h1>
-            </div>
-          </div>
-        </div>
+      <FlipCardBackSide changeSection={changeSectionSignup}>
+        <FlipCardSection>
+          <Signup1 
+            form={form21} 
+            handleChangeWithDebounce={handleChangeWithDebounce} 
+            next={next} 
+            setNext={setNext} 
+            showToast={() => showToast(form21)}
+          />
+        </FlipCardSection>
+        <FlipCardSection>
+          <Signup2 
+            form={form22} 
+            handleChangeWithDebounce={handleChangeWithDebounce} 
+            setChangeSectionSignup={setChangeSectionSignup} 
+            showToast={() => showToast(form22)}
+          />
+        </FlipCardSection>
       </FlipCardBackSide>
     </FlipCard>
   );

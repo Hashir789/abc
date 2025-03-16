@@ -33,3 +33,22 @@
 .flip-card-back {
     transform: rotateY(180deg);
 }
+.flip-card-container {
+    position: relative;
+    width: 100%;
+    height: 485px;
+    overflow: hidden;
+}
+.flip-card-container-content {
+    display: flex;
+    width: 200%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(0%);
+}
+.flip-card-container-content.change-flip-card-section {
+    transform: translateX(-50%);
+}
+.flip-card-section {
+    width: 50%;
+}

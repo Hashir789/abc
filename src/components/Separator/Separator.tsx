@@ -5,9 +5,9 @@ const Separator: FC = () => {
 
   return (
     <div className="or-separator">
-        <hr className="left-hr" />
+      <hr className="left-hr" />
         <span>OR</span>
-        <hr className="right-hr" />
+      <hr className="right-hr" />
     </div>
   );
 };

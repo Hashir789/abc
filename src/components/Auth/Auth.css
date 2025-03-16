@@ -11,25 +11,6 @@
     flex-direction: column;
     justify-content: center;
 }
-.flip-container {
-    position: relative;
-    width: 100%;
-    height: 485px;
-    overflow: hidden;
-}
-.flip-content {
-    display: flex;
-    width: 200%;
-    height: 100%;
-    transition: transform 0.5s ease-in-out;
-    transform: translateX(0%);
-}
-.flip-section {
-    width: 50%;
-}
-.flip-content.change-flip-section {
-    transform: translateX(-50%);
-}  
 .change-side{
     padding-top: 30px;
     padding-bottom: 30px;
@@ -37,14 +18,19 @@
     font-size: 18px;
     color: rgba(255, 255, 255, 0.6);
 }
+.forgot-password-container {
+    position: relative;
+}
 .forgot-password {
     margin-top: 5px;
     text-align: right;
-    padding-right: 20px;
     font-size: 14px;
     color: rgba(255, 255, 255, 0.4);
     background: inherit;
     border: none;
+    position: absolute;
+    bottom: 0;
+    right: 20px;
 }
 .forgot-password:hover {
     color: rgba(255, 255, 255, 0.6);
