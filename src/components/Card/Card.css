@@ -1,0 +1,16 @@
+.card {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.2);
+    text-align: left;
+    overflow: hidden;
+}
+@media (max-width: 600px) {
+    .card {
+      width: 100% !important;
+    }
+}

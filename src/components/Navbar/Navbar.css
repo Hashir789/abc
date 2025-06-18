@@ -1,0 +1,79 @@
+.navbar {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.navbar-logo {
+    font-family: "Oleo Script", serif;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+    color: rgba(255, 255, 255, 0.7);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.navbar-logo-display {
+    display: flex;
+    justify-content: center;
+}
+.navbar-spacing {
+    margin: 10px;
+}
+.navbar-list {
+    list-style: none;
+    padding: 20px;
+}
+.navbar-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.2);
+    margin-top: 20px;
+    transition: 0.5s color ease;
+}
+.navbar-item:first-child {
+    margin-top: 0;
+}
+.navbar-item.active {
+    color: rgba(255, 255, 255, 0.6);
+}
+.navbar-item:hover {
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+}
+.navbar-label {
+    font-size: 12px;
+    margin-top: 5px;
+}
+.navbar-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+@media (max-width: 600px) {
+    .navbar-list {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .navbar {
+        margin: 0px;
+        width: 100%;
+        padding: 20px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+    }
+    .navbar-logo-display {
+        display: none;
+    }
+    .navbar-item {
+        margin: 0px;
+    }
+    .navbar-spacing {
+        margin: 0px;
+    }
+}

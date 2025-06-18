@@ -1,18 +1,6 @@
-.ripple-button {
+.ripple-container {
   position: relative;
   overflow: hidden;
-  border-radius: 5px;
-  border: none;
-  background: rgba(0, 0, 0, 0.6);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 18px;
-  padding: 5px;
-  cursor: pointer;
-  margin-left: 15px;
-  margin-right: 15px;
-  height: 40px;
-  margin-top: 30px;
-  transition: all 0.3s ease-in-out;
 }
 .ripple {
   position: absolute;
@@ -34,4 +22,76 @@
     height: 700px;
     opacity: 0;
   }
+}
+.ripple-button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  padding-left: 20px;
+  padding-right: 20px;
+  cursor: pointer;
+  height: 40px;
+  transition: all 0.3s ease-in-out;
+  font-weight: 500;
+}
+.cancel {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+.ml {
+  margin-left: 15px;
+}
+.mr {
+  margin-right: 15px;
+}
+.mx {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.button-group-container {
+  display: flex;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  height: 50px;
+}
+.button-group-item {
+  all: unset;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button-group-item-content {
+  margin: 10px 0;
+  padding: 0 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+.button-group-item-content:first-child {
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+.button-group-item-content:last-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+.button-group-item.active {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+.button-group-item:first-child .button-group-item-content {
+  border-left: none;
+}
+.button-group-item:last-child .button-group-item-content {
+  border-right: none;
+}
+.button-group-item:hover {
+  color: rgba(255, 255, 255, 0.6);
 }

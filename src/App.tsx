@@ -1,15 +1,35 @@
+import './App.css';
 import Auth from "./pages/Auth/Auth";
+import Journal from './pages/Journal/Journal';
 import "react-toastify/dist/ReactToastify.css";
-import { Routes, Route } from "react-router-dom";
+import Navbar from './components/Navbar/Navbar';
+import Settings from './pages/Settings/Settings';
+import Scorecard from './pages/Scorecard/Scorecard';
+import Dashboard from './pages/Dashboard/Dashboard';
 import { ToastContainer, Bounce } from "react-toastify";
-import Placeholder from "./pages/Placeholder/Placeholder";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 const App = () => {
+
+  const location = useLocation();
+
   return (
     <>
+      { location.pathname !== "/" &&
+        <div className="layout-container">
+          <Navbar />
+          <div className="layout-main">
+            <Routes>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/scorecard" element={<Scorecard />} />
+              <Route path="/journal" element={<Journal />} />
+              <Route path="/settings" element={<Settings />} />
+            </Routes>
+          </div>
+        </div>
+      }
       <Routes>
         <Route path="/" element={<Auth />} />
-        <Route path="/placeholder" element={<Placeholder />} />
       </Routes>
       <ToastContainer
         position="bottom-right"
