@@ -55,11 +55,11 @@ const ConfirmEmail: FC<ConfirmEmailProps> = ({ form, handleChangeWithDebounce, s
           condition={!data?.available && !form.errors.email}
         />
         <div className="mt-20">
-          <Button width="calc(100vw - 30px)" onClick={showToast} disabled={isFetching} mx>Continue</Button>
+          <Button width="calc(100% - 30px)" onClick={showToast} disabled={isFetching} mx>Continue</Button>
         </div>
       </form>
       <div className="mt-15">
-        <Button width="calc(100vw - 30px)" onClick={() => setChangeSectionLogin(0)} isCancel mx>Cancel</Button>
+        <Button width="calc(100% - 30px)" onClick={() => setChangeSectionLogin(0)} isCancel mx>Cancel</Button>
       </div>
     </>
   );
