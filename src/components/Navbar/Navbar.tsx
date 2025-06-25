@@ -1,9 +1,9 @@
 import './Navbar.css';
 import Card from "../Card/Card";
+import { useRef, useEffect } from 'react';
 import { RiDashboardFill } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
 import { FaGear, FaClipboardList, FaChartSimple } from "react-icons/fa6";
-import { useRef, useEffect } from 'react';
 
 const navbarItems = [
   { icon: <RiDashboardFill size={25} className="navbar-icon" />, label: "Dashboard", navlink: "/dashboard" },

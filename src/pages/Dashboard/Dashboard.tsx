@@ -1,66 +1,158 @@
 import './Dashboard.css';
+import { useState, useEffect, useRef } from 'react';
 import Card from '../../components/Card/Card';
 import { Button } from '../../components/Button/Button';
 import PieChart from '../../components/Charts/PieChart/PieChart';
 
+const items = [
+  { label: "Fajar", secondaryColor: "rgba(255, 140, 0, 0.4)", primaryColor: "rgba(255, 140, 0, 1)" },
+  { label: "Dhuhr", secondaryColor: "rgba(255, 69, 0, 0.4)", primaryColor: "rgba(255, 69, 0, 1)" },
+  { label: "Asr", secondaryColor: "rgba(173, 255, 47, 0.4)", primaryColor: "rgba(173, 255, 47, 1)" },
+  { label: "Maghrib", secondaryColor: "rgba(255, 140, 0, 0.4)", primaryColor: "rgba(255, 140, 0, 1)" },
+  { label: "Isha", secondaryColor: "rgba(0, 206, 209, 0.4)", primaryColor: "rgba(0, 206, 209, 1)" },
+];
+
+const deeds = [
+  { label: "Namaz" },
+  { label: "Qur'an" },
+  { label: "Tasbeeh" },
+  { label: "Sadaqah" },
+  { label: "Roza" }
+];
+
 const Dashboard = () => {
-  
-  
+  const contentRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [activeScrollIndex, setActiveScrollIndex] = useState(0);
+  const [activeDeed, setActiveDeed] = useState(0);
+  const [overflow, setOverflow] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [itemsWidth, setItemsWidth] = useState<number[]>([]);
+  const [deedsWidth, setDeedsWidth] = useState<number[]>([]);
+
+  const handleRight = () => {
+    if (activeScrollIndex >= deeds.length) return;
+
+    const offset = deedsWidth[activeScrollIndex] + 46 + (activeScrollIndex !== 0 && activeScrollIndex % 8 === 0 ? 5 : 0);
+    const newLeft = scrollLeft - offset;
+
+    if (-newLeft < overflow) {
+      setScrollLeft(newLeft);
+      setActiveScrollIndex(prev => prev + 1);
+    } else {
+      setScrollLeft(-overflow + 5);
+      setActiveScrollIndex(deeds.length);
+    }
+  };
+
+  const handleLeft = () => {
+    if (activeScrollIndex <= 0) return;
+
+    const offset = deedsWidth[activeScrollIndex - 1] + 46 + (activeScrollIndex - 1 !== 0 && (activeScrollIndex - 1) % 8 === 0 ? 5 : 0);
+    const newLeft = scrollLeft + offset;
+
+    if (-newLeft > 0) {
+      setScrollLeft(newLeft);
+      setActiveScrollIndex(prev => prev - 1);
+    } else {
+      setScrollLeft(0);
+      setActiveScrollIndex(0);
+    }
+  };
+
+  useEffect(() => {
+    const measureTextWidth = (label: string, ctx: CanvasRenderingContext2D): number => {
+      ctx.font = `400 18px Poppins`;
+      return Math.floor(ctx.measureText(label).width);
+    };
+
+    const getLabelWidths = (labels: string[]): number[] => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return [];
+      return labels.map(label => measureTextWidth(label, ctx));
+    };
+
+    document.fonts.ready.then(() => {
+      setItemsWidth(getLabelWidths(items.map(i => i.label)));
+      setDeedsWidth(getLabelWidths(deeds.map(d => d.label)));
+    });
+
+    const checkOverflow = () => {
+      if (!containerRef.current || !contentRef.current) return;
+      const diff = contentRef.current.scrollWidth - containerRef.current.clientWidth;
+      setOverflow(diff > 0 ? diff : 0);
+    };
+
+    checkOverflow();
+    window.addEventListener('resize', checkOverflow);
+    return () => window.removeEventListener('resize', checkOverflow);
+  }, []);
+
   return (
     <div className="dashboard-container">
-      <div className="dashboard-column">
-        <Card width="100%" height="100%">
-          {/* <div className='chart-section-toolbar'>
-            <div className={`chart-section-toolbar-left ${( toolbar === 1 || toolbar === 2 ) ? 'hide': ''}`}>
-              <div className='low-opacity' onClick={() => scrollToolbar('left')}>
-                <Button isCancel width='50px'><i className="fa-solid fa-caret-left"></i></Button>
+      <div className="dashboard-container-content">
+        
+        <div className="dashboard-column">
+          <Card width="100%">
+            <div className="toolbar-wrapper">
+              <div className="toolbar-button-left" style={{ opacity: overflow ? 1 : 0 }} onClick={handleLeft}>
+                <Button isCancel><i className="fa-solid fa-caret-left"></i></Button>
+              </div>
+              <div className="toolbar-container" ref={containerRef}>
+                <div
+                  className={`toolbar-content ${overflow ? 'absolute' : ''}`}
+                  style={{ left: `${scrollLeft}px` }}
+                  ref={contentRef}
+                >
+                  {deeds.map((deed, index) => (
+                    <div key={index} onClick={() => setActiveDeed(index)}>
+                      <Button isCancel={index !== activeDeed}>{deed.label}</Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="toolbar-button-right" style={{ opacity: overflow ? 1 : 0 }} onClick={handleRight}>
+                <Button isCancel><i className="fa-solid fa-caret-right"></i></Button>
               </div>
             </div>
-            <div className={`chart-section-toolbar-middle ${( toolbar === 1 || toolbar === 2 ) ? 'left': ''} ${( toolbar === 1 || toolbar === 3 ) ? 'right': ''} ${( toolbar === 1 ) ? 'border': ''}`} ref={containerRef}>
-              {deeds.map((deed, index) => {
-                return (
-                  <div key={index}>
-                    <Button isCancel={!deed.active}>{deed.label}</Button>
-                  </div>
-                );
-              })}
-            </div>
-            <div className={`chart-section-toolbar-right ${( toolbar === 1 || toolbar === 3 ) ? 'hide': ''}`}>
-              <div className='low-opacity' onClick={() => scrollToolbar('right')}>
-                <Button isCancel width='50px'><i className="fa-solid fa-caret-right"></i></Button>
+
+            <div className="scrollable-button-container">
+              <div className="scrollable-wrapper">
+                <div className="scrollable-content">
+                  {deeds.map((deed, index) => (
+                    <div key={index} onClick={() => setActiveDeed(index)}>
+                      <Button isCancel={index !== activeDeed}>{deed.label}</Button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div> */}
-          <div className='chart-section-toolbar'>
-            <div style={{ background: "rgba(255, 255, 255, 0.1)", padding: "5px 0px 5px 5px", borderTopLeftRadius: "10px", borderBottomLeftRadius: "10px", borderTop: "1px solid rgba(255, 255, 255, 0.1)", borderBottom: "1px solid rgba(255, 255, 255, 0.1)", borderLeft: "1px solid rgba(255, 255, 255, 0.1)", opacity: 0 }}>
-              <Button isCancel width="50px"><i className="fa-solid fa-caret-left"></i></Button>
-            </div>
-            <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-              <div style={{ display: "flex", gap: "5px", padding: "5px 0px", border: "1px solid rgba(255, 255, 255, 0.1)", background: "rgba(255, 255, 255, 0.1)", borderRadius: "10px", overflowX: "auto" }}>
-                <div style={{ flexShrink: 0 }}><Button>Namaz</Button></div>
-                <div style={{ flexShrink: 0 }}><Button isCancel>Qur'an</Button></div>
-                <div style={{ flexShrink: 0 }}><Button isCancel>Qur'an</Button></div>
-                <div style={{ flexShrink: 0 }}><Button isCancel>Qur'an</Button></div>
-                <div style={{ flexShrink: 0 }}><Button isCancel>Qur'an</Button></div>
-                <div style={{ flexShrink: 0 }}><Button isCancel>Qur'an</Button></div>
-                <div style={{ flexShrink: 0 }}><Button isCancel>Qur'an</Button></div>
-                <div style={{ flexShrink: 0 }}><Button isCancel>Qur'an</Button></div>
-                <div style={{ flexShrink: 0 }}><Button isCancel>Qur'an</Button></div>
-              </div>
-            </div>
-            <div style={{ background: "rgba(255, 255, 255, 0.1)", padding: "5px 5px 5px 0px", borderTopRightRadius: "10px", borderBottomRightRadius: "10px", borderTop: "1px solid rgba(255, 255, 255, 0.1)", borderBottom: "1px solid rgba(255, 255, 255, 0.1)", borderRight: "1px solid rgba(255, 255, 255, 0.1)", opacity: 0 }}>
-              <Button isCancel width="50px"><i className="fa-solid fa-caret-right"></i></Button>
-            </div>
-          </div>
-          <div style={{ height: 'calc(100% - 72px)' }}>
+
             <PieChart />
-          </div>
-        </Card>
-      </div>
-      <div className="dashboard-column">
-        <Card width="100%" height="100%">
-          {window.innerWidth}, {window.innerHeight}
-        </Card>
+
+            <div className="legend-container">
+              {items.map((item, index) => (
+                <div key={index} className="legend-item">
+                  <div className="legend-color-box" style={{ background: item.secondaryColor, borderColor: item.primaryColor }}></div>
+                  <div className="legend-label" style={{ width: `${Math.floor(Math.max(...itemsWidth)) + 10}px` }}>
+                    {item.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        <div className="dashboard-column">
+          <Card width="100%" height="100%">
+            {Array.from({ length: 10 }).map((_, index) => (
+              <div key={index}>{window.innerWidth}, {window.innerHeight}</div>
+            ))}
+          </Card>
+        </div>
+
       </div>
     </div>
   );

@@ -2,8 +2,9 @@ import './PieChart.css';
 import { useEffect, useRef } from 'react';
 
 const PieChart = () => {
-  const pieChartRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<any>(null);
+  const pieChartRef = useRef<HTMLCanvasElement | null>(null);
+  const isPortrait = window.matchMedia("(orientation: portrait)").matches;
 
   useEffect(() => {
     const canvas = pieChartRef.current;
@@ -46,7 +47,7 @@ const PieChart = () => {
           'rgba(0, 206, 209, 1)'
         ],
         borderWidth: 1,
-        borderRadius: 10,
+        borderRadius: isPortrait ? 8:10,
         spacing: 10,
       }]
     };
@@ -54,7 +55,7 @@ const PieChart = () => {
     const options = {
       responsive: true,
       maintainAspectRatio: false,
-      cutout: '60%',
+      cutout: isPortrait ? '55%' : '60%',
       layout: {
         padding: 10,
       },

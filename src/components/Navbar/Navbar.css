@@ -52,7 +52,7 @@
     flex-direction: column;
     align-items: center;
 }
-@media (max-width: 600px) {
+@media (orientation: portrait) {
     .navbar-list {
         display: flex;
         flex-direction: row;

@@ -11,7 +11,7 @@
 .layout-main {
     width: calc(100vw - 130px);
 }
-@media (max-width: 600px) {
+@media (orientation: portrait) {
     .layout-container {
         display: flex;
         flex-direction: column-reverse;
