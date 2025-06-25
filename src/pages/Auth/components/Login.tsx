@@ -1,6 +1,7 @@
 import "../Auth.css";
 import { FC } from "react";
 import { FormikProps } from "formik";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "../../../components/Button/Button";
 import Separator from "../../../components/Separator/Separator";
@@ -14,10 +15,11 @@ interface LoginProps {
 }
 
 const Login: FC<LoginProps> = ({ form, handleChangeWithDebounce, setChangeSectionLogin, showToast }) => {
-  
+  const navigate = useNavigate();
+
   return (
     <>
-      <h1 className="logo">Kitaab</h1>
+      <h1 className="logo" onClick={() => navigate("dashboard")}>Kitaab</h1>
       <form className="form" onSubmit={(e)=> {
         e.preventDefault();
         form.submitForm().then(() => {
